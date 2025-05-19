@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<site xmlns="http://maven.apache.org/SITE/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd"
-  name="LangGraph4j::Generator" >
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
+         name="LangGraph4j::Builder">
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-fluido-skin</artifactId>
@@ -12,6 +12,11 @@
             <sideBarEnabled>true</sideBarEnabled>
         </fluidoSkin>
     </custom>
+    <bannerLeft>
+        <!-- <name>LangGraph4j</name> -->
+        <href>https://bsorrentino.github.io/langgraph4j/</href>
+        <src>langgraph4j.png</src>
+    </bannerLeft>
     <body>
 
         <head>
@@ -33,4 +38,4 @@
 
 
     </body>
-</site>
+</project>
