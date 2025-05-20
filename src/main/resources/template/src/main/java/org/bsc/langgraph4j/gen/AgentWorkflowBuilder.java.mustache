@@ -1,27 +1,27 @@
+package org.bsc.langgraph4j.gen;
+
 import org.bsc.langgraph4j.GraphStateException;
 import org.bsc.langgraph4j.StateGraph;
 import org.bsc.langgraph4j.action.AsyncEdgeAction;
 import org.bsc.langgraph4j.action.AsyncNodeAction;
-import org.bsc.langgraph4j.action.EdgeAction;
-import org.bsc.langgraph4j.action.NodeAction;
 import org.bsc.langgraph4j.serializer.StateSerializer;
 import org.bsc.langgraph4j.state.AgentState;
 import org.bsc.langgraph4j.state.AgentStateFactory;
+import org.bsc.langgraph4j.state.Channel;
 import org.bsc.langgraph4j.utils.EdgeMappings;
 
+import java.util.Map;
 import java.util.Objects;
 
 import static org.bsc.langgraph4j.StateGraph.START;
 import static org.bsc.langgraph4j.StateGraph.END;
-import static org.bsc.langgraph4j.action.AsyncEdgeAction.edge_async;
-import static org.bsc.langgraph4j.action.AsyncNodeAction.node_async;
 
 /**
  * This is an automatically generated file. Do not modify it.
  *
  * This file was generated using `langgraph4j-gen`.
  */
-public class {{name}}Builder<State extends AgentState> {
+public class AgentWorkflowBuilder<State extends AgentState> {
 
     {{#nodes}}
     private AsyncNodeAction<State> {{name}};
@@ -33,22 +33,22 @@ public class {{name}}Builder<State extends AgentState> {
     {{/edges}}
 
     {{#nodes}}
-    public CustomAgentBuilderSample<State> {{name}}(AsyncNodeAction<State> {{name}}) {
+        public AgentWorkflowBuilder<State> {{name}}(AsyncNodeAction<State> {{name}}) {
         this.{{name}} = {{name}};
         return this;
-    }
+        }
     {{/nodes}}
+
     {{#edges}}
-    {{#condition}}
-    public CustomAgentBuilderSample<State> {{condition}}(AsyncEdgeAction<State> {{condition}}) {
-        this.{{condition}} = {{condition}};
-        return this;
-    }
-    {{/condition}}
+        {{#condition}}
+            public AgentWorkflowBuilder<State> {{condition}}(AsyncEdgeAction<State> {{condition}}) {
+            this.{{condition}} = {{condition}};
+            return this;
+            }
+        {{/condition}}
     {{/edges}}
 
-
-    private StateGraph<State> of( AgentStateFactory<State> factory) {
+    private StateGraph<State> of(AgentStateFactory<State> factory) {
         return new StateGraph<>( factory );
     }
 
@@ -66,12 +66,12 @@ public class {{name}}Builder<State extends AgentState> {
 
     private StateGraph<State> build( StateGraph<State> graph ) throws GraphStateException {
         {{#nodes}}
-        Objects.requireNonNull( {{name$}}, "{{name}} cannot be null");
+            Objects.requireNonNull( {{name}}, "{{name}} cannot be null");
         {{/nodes}}
         {{#edges}}
-        {{#condition}}
-        Objects.requireNonNull( {{condition}}, "{{condition}} cannot be null");
-        {{/condition}}
+            {{#condition}}
+                Objects.requireNonNull( {{condition}}, "{{condition}} cannot be null");
+            {{/condition}}
         {{/edges}}
 
         return graph
@@ -79,18 +79,18 @@ public class {{name}}Builder<State extends AgentState> {
             .addNode( {{name$}}, {{name}} )
         {{/nodes}}
         {{#edges}}
-        {{^condition}}
-            .addEdge( {{from$}}, {{to$}} )
-        {{/condition}}
-        {{#condition}}
-            .addConditionalEdges( {{from$}},
+            {{^condition}}
+                .addEdge( {{from$}}, {{to$}} )
+            {{/condition}}
+            {{#condition}}
+                .addConditionalEdges( {{from$}},
                 {{condition}},
                 EdgeMappings.builder()
                 {{#paths$}}
                     .to( {{.}} )
                 {{/paths$}}
                 .build())
-        {{/condition}}
+            {{/condition}}
         {{/edges}}
         ;
 

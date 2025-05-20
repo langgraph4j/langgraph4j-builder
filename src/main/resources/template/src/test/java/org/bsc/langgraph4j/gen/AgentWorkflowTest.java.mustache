@@ -1,10 +1,13 @@
+package org.bsc.langgraph4j.gen;
+
 import org.bsc.langgraph4j.CompileConfig;
 import org.bsc.langgraph4j.RunnableConfig;
-import org.bsc.langgraph4j.GraphStateException;
-import org.bsc.langgraph4j.checkpoint.MemorySaver;
-import org.bsc.langgraph4j.state.AgentState;
+import org.bsc.langgraph4j.prebuilt.MessagesState;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+
+import static org.bsc.langgraph4j.StateGraph.END;
 import static org.bsc.langgraph4j.action.AsyncEdgeAction.edge_async;
 import static org.bsc.langgraph4j.action.AsyncNodeAction.node_async;
 
@@ -17,26 +20,28 @@ import static org.bsc.langgraph4j.action.AsyncNodeAction.node_async;
 *
 * Replace the placeholder implementation with your own logic.
 */
-public class {{name}}Sample {
+public class AgentWorkflowTest {
 
-    public static void main( String[] args ) throws GraphStateException {
-        var graph = {{name}}Builder.builder()
+    @Test
+    public void workflowTest() throws Exception {
+
+        var graph = new AgentWorkflowBuilder<MessagesState<String>>()
         {{#nodes}}
             .{{name}}( node_async(state -> {
-                System.out.println( "{{name}}" );
-                return Map.of();
+            System.out.println( "{{name}}" );
+            return Map.of();
             }))
         {{/nodes}}
         {{#edges}}
             {{#condition}}
-            .{{condition}}( edge_async( state -> {
+                .{{condition}}( edge_async( state -> {
                 System.out.println( "{{condition}}" );
                 // Implement me. Returns one of the paths.
                 return "";
-            }))
+                }))
             {{/condition}}
         {{/edges}}
-            .build( MessagesState::new, MessagesState.SCHEMA );
+        .build( MessagesState::new, MessagesState.SCHEMA );
 
 
         var compileConfig = CompileConfig.builder()

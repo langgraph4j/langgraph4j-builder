@@ -79,6 +79,11 @@ public class CustomAgentBuilderTest {
 
         System.out.println( result2 );
 
+        var result3 = gen.generateProjectFiles();
+
+        result3.forEach( sourceFile -> System.out.println(sourceFile.path()));
+
+
     }
 
 }

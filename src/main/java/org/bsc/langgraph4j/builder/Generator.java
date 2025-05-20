@@ -1,17 +1,22 @@
 package org.bsc.langgraph4j.builder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.reflect.ReflectionObjectHandler;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class Generator
-{
+public class Generator {
+
+    public static final String TEMPLATE_FOLDER = "template";
+
     private static class MapMethodReflectionHandler extends ReflectionObjectHandler {
         @Override
         protected boolean areMethodsAccessible(Map<?, ?> map) {
@@ -19,12 +24,13 @@ public class Generator
         }
     }
 
-    public record Result( String stub, String implementation ) {}
+    public record SourceFile(String path, String content) {
+    }
 
-    final Mustache customAgentBuilderTemplate;
-    final Mustache customAgentBuilderImplTemplate;
+    public record Result(SourceFile stub, SourceFile implementation, List<SourceFile> extraFiles) {
+    }
 
-    public static void main( String[] args ) throws Exception {
+    public static void main(String[] args) throws Exception {
 
         var definitionBuilder = new StringBuilder();
         try (var reader = new BufferedReader(new InputStreamReader(System.in))) {
@@ -46,16 +52,21 @@ public class Generator
 
         var graph = objectMapperYAML.readValue(definitionBuilder.toString(), GraphDefinition.Graph.class);
 
-        var stub = gen.generateBuilderFromDefinition(graph);
-
-        var implementation = gen.generateBuilderImplementationFromDefinition(graph);
-
-        var result = new Result(stub, implementation);
+        var result = new Result(
+                gen.generateBuilderFromDefinition(graph),
+                gen.generateBuilderImplementationFromDefinition(graph),
+                gen.generateProjectFiles());
 
         var objectMapper = new ObjectMapper();
 
         System.out.println(objectMapper.writeValueAsString(result));
     }
+
+    final Mustache customAgentBuilderTemplate;
+    final Mustache customAgentBuilderImplTemplate;
+
+    final Path srcMainPath = Paths.get("src", "main", "java", "org", "bsc", "langgraph4j", "gen");
+    final Path srcTestPath = Paths.get("src", "test", "java", "org", "bsc", "langgraph4j", "gen");
 
     public Generator() {
         var factory = new DefaultMustacheFactory() {
@@ -73,29 +84,64 @@ public class Generator
             }
         };
         factory.setObjectHandler(new MapMethodReflectionHandler());
-        this.customAgentBuilderTemplate = factory.compile("CustomAgentBuilder.mustache");
-        this.customAgentBuilderImplTemplate = factory.compile("CustomAgentBuilderImpl.mustache");
+
+        var srcPath = Paths.get(TEMPLATE_FOLDER, srcMainPath.toString(), "AgentWorkflowBuilder.java.mustache").toString();
+        var testPath = Paths.get(TEMPLATE_FOLDER, srcTestPath.toString(), "AgentWorkflowTest.java.mustache").toString();
+
+        this.customAgentBuilderTemplate = factory.compile(srcPath);
+        this.customAgentBuilderImplTemplate = factory.compile(testPath);
 
     }
 
 
-    public String generateBuilderFromDefinition( GraphDefinition.Graph graph ) throws IOException {
+    public SourceFile generateBuilderFromDefinition(GraphDefinition.Graph graph) throws IOException {
 
         var out = new StringWriter();
 
-        customAgentBuilderTemplate.execute( out, graph ).flush();
+        customAgentBuilderTemplate.execute(out, graph).flush();
 
-        return out.toString();
+        return new SourceFile(Paths.get(srcMainPath.toString(), "AgentWorkflowBuilder.java").toString(), out.toString());
     }
 
-    public String generateBuilderImplementationFromDefinition( GraphDefinition.Graph graph ) throws IOException {
+    public SourceFile generateBuilderImplementationFromDefinition(GraphDefinition.Graph graph) throws IOException {
 
         var out = new StringWriter();
 
-        customAgentBuilderImplTemplate.execute( out, graph ).flush();
+        customAgentBuilderImplTemplate.execute(out, graph).flush();
 
-        return out.toString();
+        return new SourceFile(Paths.get(srcTestPath.toString(), "AgentWorkflowTest.java").toString(), out.toString());
     }
 
+    public List<SourceFile> generateProjectFiles() throws Exception {
+
+        var resources = List.of(
+                Paths.get( TEMPLATE_FOLDER, ".gitignore"),
+                Paths.get( TEMPLATE_FOLDER, "pom.xml"),
+                Paths.get( TEMPLATE_FOLDER, "README.md")
+        );
+
+        var result = new ArrayList<SourceFile>();
+
+
+        for( var path : resources ) {
+
+            var resource = path.toString();
+
+            try( var stream = getClass().getClassLoader().getResourceAsStream(resource) ) {
+
+                if (stream == null) {
+                    continue;
+                }
+
+                var content = new String(stream.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+
+                result.add(new SourceFile(Paths.get(TEMPLATE_FOLDER).relativize(path).toString(), content));
+            }
+
+
+        }
+
+        return result;
+    }
 
 }
