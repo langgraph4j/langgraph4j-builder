@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.bsc.langgraph4j</groupId>
+        <artifactId>langgraph4j-parent</artifactId>
+        <version>1.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>langgraph4j-startup</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <name>langgraph4j::startup-project</name>
+
+    <properties>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.bsc.langgraph4j</groupId>
+            <artifactId>langgraph4j-core</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>org.bsc.langgraph4j</groupId>
+            <artifactId>langgraph4j-studio-jetty</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>langchain4j</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.bsc.langgraph4j</groupId>
+                    <artifactId>langgraph4j-langchain4j</artifactId>
+                    <version>${parent.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>dev.langchain4j</groupId>
+                    <artifactId>langchain4j</artifactId>
+                    <version>${langchain4j.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>dev.langchain4j</groupId>
+                    <artifactId>langchain4j-open-ai</artifactId>
+                    <version>${langchain4j.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>dev.langchain4j</groupId>
+                    <artifactId>langchain4j-ollama</artifactId>
+                    <version>${langchain4j.beta}</version>
+                </dependency>
+
+            </dependencies>
+        </profile>
+        <profile>
+            <id>springai</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.bsc.langgraph4j</groupId>
+                    <artifactId>langgraph4j-spring-ai</artifactId>
+                    <version>${parent.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.ai</groupId>
+                    <artifactId>spring-ai-ollama</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.ai</groupId>
+                    <artifactId>spring-ai-openai</artifactId>
+                </dependency>
+
+            </dependencies>
+        </profile>
+    </profiles>
+</project>
