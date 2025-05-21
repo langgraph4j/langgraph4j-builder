@@ -36,8 +36,8 @@ public class AgentWorkflowTest {
             {{#condition}}
                 .{{condition}}( edge_async( state -> {
                 System.out.println( "{{condition}}" );
-                // Implement me. Returns one of the paths.
-                return "";
+                // TODO: Returns one of the paths.
+                return ;
                 }))
             {{/condition}}
         {{/edges}}
