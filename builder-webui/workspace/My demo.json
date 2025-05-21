@@ -1,0 +1,120 @@
+{
+  "name": "My demo",
+  "nodes": [
+    {
+      "id": "source",
+      "type": "source",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "start"
+      },
+      "measured": {
+        "width": 135,
+        "height": 51
+      }
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "position": {
+        "x": 0,
+        "y": 600
+      },
+      "data": {
+        "label": "__end__"
+      },
+      "measured": {
+        "width": 130,
+        "height": 51
+      }
+    },
+    {
+      "id": "node-1",
+      "type": "custom",
+      "position": {
+        "x": 366.12857142857143,
+        "y": 409.68809523809534
+      },
+      "selected": false,
+      "data": {
+        "label": "Node 1"
+      },
+      "measured": {
+        "width": 150,
+        "height": 44
+      },
+      "dragging": false
+    },
+    {
+      "id": "node-2",
+      "type": "custom",
+      "position": {
+        "x": -307.46904761904767,
+        "y": 386.06190476190477
+      },
+      "selected": true,
+      "data": {
+        "label": "Node 2"
+      },
+      "measured": {
+        "width": 150,
+        "height": 44
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "source",
+      "target": "node-2",
+      "id": "edge-1",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": true,
+      "label": "conditional_edge_1"
+    },
+    {
+      "source": "source",
+      "target": "node-1",
+      "id": "edge-2",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": true,
+      "label": "conditional_edge_1"
+    },
+    {
+      "source": "node-1",
+      "target": "end",
+      "id": "edge-3",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": false,
+      "label": "conditional_edge"
+    },
+    {
+      "source": "node-2",
+      "target": "node-1",
+      "id": "edge-4",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": false,
+      "label": "conditional_edge"
+    }
+  ],
+  "viewport": {
+    "x": 811.8621700879766,
+    "y": 27.090909090909065,
+    "zoom": 1.2316715542521994
+  }
+}
