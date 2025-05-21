@@ -9,9 +9,7 @@
 
     <artifactId>langgraph4j-startup</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-
     <packaging>jar</packaging>
-
     <name>langgraph4j::startup-project</name>
 
     <properties>
@@ -51,6 +49,20 @@
 
     <build>
     </build>
+
+    <repositories>
+        <repository>
+            <id>sonatype-server</id>
+            <name>sonatype snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
     <profiles>
         <profile>
