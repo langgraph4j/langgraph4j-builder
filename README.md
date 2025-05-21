@@ -6,7 +6,7 @@ Provides a powerful canvas for designing Agentic Workflow as LangGraph4j applica
 
 Based on project [langgraph-builder] we have integrate the **Langgraph4j** part (take a look to the [fork][langgraph-builder-fork]) so we can now **visually scaffolding a langchain4j graph** and **generate java code**
 
-![builder](src/site/resources/langgraph4j-builder.gif)
+![builder](src/site/resources/langgraph4j-builder.mov.gif)
 
 ## Scaffolding
 This module generate a langgraph4j scaffold from a [Domain Specific Language (DSL)][DSL] based on [YAML] format.
