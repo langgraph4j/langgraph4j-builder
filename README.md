@@ -30,12 +30,17 @@ edges:
 
 ## Setup (with Docker)
 
+**Pull image**
 ```bash
 docker pull bsorrentino/langgraph4j-builder:1.5.0-SNAPSHOT
+```
 
-docker run -d \
+**Run container**
+```bash
+docker run --rm \
   --name langgraph4j-builder-app \
   -p 3000:3000 \
+  -v .:/app/workspace \
   -e NODE_ENV=production \
   -e LANGRAPH4J_GEN=generator-1.5-SNAPSHOT-jar-with-dependencies.jar \
   -e RUNNING_IN_DOCKER=true \
