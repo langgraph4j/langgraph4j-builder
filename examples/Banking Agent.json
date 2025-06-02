@@ -1,0 +1,169 @@
+{
+  "name": "Banking Agent",
+  "nodes": [
+    {
+      "id": "source",
+      "type": "source",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "start"
+      },
+      "measured": {
+        "width": 135,
+        "height": 51
+      }
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "position": {
+        "x": 315.3394648829431,
+        "y": 354.115050167224
+      },
+      "data": {
+        "label": "__end__"
+      },
+      "measured": {
+        "width": 130,
+        "height": 51
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "node-1",
+      "type": "custom",
+      "position": {
+        "x": -180.4220735785953,
+        "y": 354.6227424749163
+      },
+      "selected": false,
+      "data": {
+        "label": "PaymentAgent"
+      },
+      "measured": {
+        "width": 150,
+        "height": 44
+      },
+      "dragging": false
+    },
+    {
+      "id": "node-2",
+      "type": "custom",
+      "position": {
+        "x": -416.1826086956522,
+        "y": 349.83277591973246
+      },
+      "selected": false,
+      "data": {
+        "label": "AccountAgent"
+      },
+      "measured": {
+        "width": 150,
+        "height": 44
+      },
+      "dragging": false
+    },
+    {
+      "id": "node-3",
+      "type": "custom",
+      "position": {
+        "x": -21.683277591973248,
+        "y": 146.13377926421404
+      },
+      "selected": false,
+      "data": {
+        "label": "SupervisorAgent"
+      },
+      "measured": {
+        "width": 150,
+        "height": 44
+      },
+      "dragging": false
+    },
+    {
+      "id": "node-4",
+      "type": "custom",
+      "position": {
+        "x": 65.08361204013376,
+        "y": 356.25919732441463
+      },
+      "selected": false,
+      "data": {
+        "label": "TransactionAgent"
+      },
+      "measured": {
+        "width": 150,
+        "height": 44
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "node-3",
+      "target": "node-1",
+      "id": "edge-4",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": true,
+      "label": "intent",
+      "data": {}
+    },
+    {
+      "source": "source",
+      "target": "node-3",
+      "id": "edge-5",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": false,
+      "label": "conditional_edge"
+    },
+    {
+      "source": "node-3",
+      "target": "node-2",
+      "id": "edge-6",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": true,
+      "label": "intent",
+      "data": {}
+    },
+    {
+      "source": "node-3",
+      "target": "end",
+      "id": "edge-7",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": true,
+      "label": "intent"
+    },
+    {
+      "source": "node-3",
+      "target": "node-4",
+      "id": "edge-8",
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "type": "self-connecting-edge",
+      "animated": true,
+      "label": "intent"
+    }
+  ],
+  "viewport": {
+    "x": 778.9482614160033,
+    "y": 40.77272727272731,
+    "zoom": 1.252618349392543
+  }
+}
