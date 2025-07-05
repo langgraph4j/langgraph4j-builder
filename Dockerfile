@@ -1,3 +1,15 @@
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+
+# Copy pom.xml and other necessary files (e.g., .m2)
+COPY pom.xml .
+
+# Copy source code
+COPY src ./src
+
+# Execute packaging command
+RUN mvn package
+
 # Start from the official Node.js 22 image (Debian-based)
 FROM node:22-slim
 
