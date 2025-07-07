@@ -36,7 +36,7 @@ WORKDIR /app
 # Copy your Node.js app
 COPY builder-webui/ .
 ARG LANGRAPH4J_GEN
-COPY target/${LANGRAPH4J_GEN} .
+COPY --from=build /app/target/${LANGRAPH4J_GEN} .
 
 EXPOSE 3000
 
