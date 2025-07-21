@@ -5,6 +5,9 @@ services:
       dockerfile: Dockerfile
       args:
         LANGRAPH4J_GEN: generator-1.6-SNAPSHOT-jar-with-dependencies.jar  # Pass the value here
+      platforms: # Specify desired platforms
+        - "linux/amd64"
+        - "linux/arm64"
     image: bsorrentino/langgraph4j-builder:1.6-SNAPSHOT
     container_name: langgraph4j-builder-app
     ports:
